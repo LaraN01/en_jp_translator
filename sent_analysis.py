@@ -8,11 +8,10 @@ st.caption("Type text and get a sentiment prediction (POSITIVE / NEGATIVE).")
 
 @st.cache_resource
 def load_sentiment_pipeline():
-    # A solid default sentiment model (English). Small + fast on CPU.
     return pipeline(
         "sentiment-analysis",
         model="distilbert-base-uncased-finetuned-sst-2-english",
-        device=-1  # CPU; Streamlit Cloud is typically CPU
+        device=-1  
     )
 
 sentiment = load_sentiment_pipeline()
@@ -33,7 +32,7 @@ if analyze:
     else:
         with st.spinner("Analyzing..."):
             try:
-                result = sentiment(text[:2000])[0]  # keep it reasonable
+                result = sentiment(text[:2000])[0]  
                 st.session_state["result"] = result
             except Exception as e:
                 st.error(f"Error: {e}")
@@ -47,7 +46,6 @@ if res:
     st.subheader("Result")
     st.metric("Sentiment", label, f"{score*100:.1f}% confidence")
 
-    # Small visual cue
     if label.upper() == "POSITIVE":
         st.success("Overall sentiment looks positive.")
     else:
